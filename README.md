@@ -341,6 +341,36 @@ Save data.json
 
 ---
 
+## 📋 Project Issues & Feature Roadmap
+
+GitHub Issues are being used to track planned improvements and currently identified issues without modifying the existing application source.
+
+### 🐛 Current Issue
+
+| Issue | Description | Status |
+|---|---|---|
+| [#8 — Close Account Menu Mapping](https://github.com/vishwas0229/Bank-Management-System/issues/8) | Menu option 6 currently calls the update-details method instead of the existing close-account method. | Open |
+
+### 🚀 Planned Features
+
+| Issue | Feature | Description |
+|---|---|---|
+| [#1](https://github.com/vishwas0229/Bank-Management-System/issues/1) | Continuous Main Menu | Keep the application running and return to the menu after each operation. |
+| [#2](https://github.com/vishwas0229/Bank-Management-System/issues/2) | Transaction History | Store and display deposit, withdrawal, and transfer records. |
+| [#3](https://github.com/vishwas0229/Bank-Management-System/issues/3) | Fund Transfer | Transfer money securely between existing accounts. |
+| [#4](https://github.com/vishwas0229/Bank-Management-System/issues/4) | Strong Input Validation | Add centralized validation for account, customer, PIN, and transaction inputs. |
+| [#5](https://github.com/vishwas0229/Bank-Management-System/issues/5) | Secure PIN Storage | Replace plain-text PIN storage with secure credential handling. |
+| [#6](https://github.com/vishwas0229/Bank-Management-System/issues/6) | Database Backend | Move from JSON persistence toward SQLite/MySQL-based storage. |
+| [#7](https://github.com/vishwas0229/Bank-Management-System/issues/7) | Account Number Uniqueness | Verify generated account numbers are unique before saving them. |
+
+### 📌 Project Tracking
+
+The issues above provide a structured roadmap for future development. They intentionally describe **features and fixes separately from the current implementation**, so the existing application can remain unchanged until a particular issue is selected for development.
+
+> **Current repository update:** GitHub Issues and this README project-roadmap section were updated. **No changes were made to `main.py` or `data.json`.**
+
+---
+
 ## ⚠️ Current Implementation Notes
 
 This README documents the repository as it currently exists. Some behaviors should be considered when using or extending the project:
