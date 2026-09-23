@@ -1,0 +1,52 @@
+[
+    {
+        "Name": "VISHWAS",
+        "DOB": "5/8/2006",
+        "Age": 20,
+        "Gender": "MALE",
+        "Email": "vishwas@gmail.com",
+        "Account No.": "403199230964222",
+        "PIN": 1234,
+        "Balance": 0
+    },
+    {
+        "Name": "RAHUL",
+        "DOB": "29/2/2004",
+        "Age": 22,
+        "Gender": "MALE",
+        "Email": "rahul@gmail.com",
+        "Account No.": "138019814857599",
+        "PIN": 1234,
+        "Balance": 0
+    },
+    {
+        "Name": "VISHU BANSAL",
+        "DOB": "29/7/2008",
+        "Age": 18,
+        "Gender": "MALE",
+        "Email": "vishu@gmail.com",
+        "Account No.": "167968229256500",
+        "PIN": 1234,
+        "Balance": 400000
+    },
+    {
+        "Name": "ANYA",
+        "DOB": "13/4/2006",
+        "Age": 20,
+        "Gender": "FEMALE",
+        "Email": "anya@gmail.com",
+        "Account No.": "417904531249109",
+        "PIN": 1234,
+        "Balance": 100000
+    },
+    {
+        "Name": "PALAK",
+        "DOB": "25/7/2006",
+        "Age": 20,
+        "Gender": "FEMALE",
+        "Email": "palak@gmail.com",
+        "Account No.": "457019859915441",
+        "PIN": 1234,
+        "Balance": 0
+    }
+]
