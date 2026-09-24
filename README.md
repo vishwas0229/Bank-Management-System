@@ -367,7 +367,18 @@ GitHub Issues are being used to track planned improvements and currently identif
 
 The issues above provide a structured roadmap for future development. They intentionally describe **features and fixes separately from the current implementation**, so the existing application can remain unchanged until a particular issue is selected for development.
 
-> **Current repository update:** GitHub Issues and this README project-roadmap section were updated. **No changes were made to `main.py` or `data.json`.**
+### 🔒 Source Protection
+
+For repository maintenance updates that are limited to documentation and project tracking, the application source and data files are intentionally left untouched:
+
+| File | Current maintenance policy |
+|---|---|
+| `main.py` | **Do not modify** during documentation/issue updates |
+| `data.json` | **Do not modify** during documentation/issue updates |
+| `README.md` | Documentation and roadmap updates allowed |
+| GitHub Issues | Feature planning and bug tracking allowed |
+
+> **Current repository update:** Documentation/project tracking was updated without changing `main.py` or `data.json`.
 
 ---
 
