@@ -278,32 +278,39 @@ class Bank:
 # Call Bank class in user object
 user = Bank()
 
+while 1:
+    print("1. Open Account")
+    print("2. Deposit Money")
+    print("3. Whidhraw Money")
+    print("4. View Passbook")
+    print("5. Update Details")
+    print("6. Close Account")
+    print("0. Exit")
+    print("------------------------------------------------")
 
-print("1. Open Account")
-print("2. Deposit Money")
-print("3. Whidhraw Money")
-print("4. View Passbook")
-print("5. Update Details")
-print("6. Close Account")
-print("------------------------------------------------")
+    opt = int(input("Enter your responce: "))
+    print("------------------------------------------------")
 
-opt = int(input("Enter your responce: "))
-print("------------------------------------------------")
-
-if opt == 1:
-    user.creatAcc()
+    if opt == 1:
+        user.creatAcc()
+        
+    elif opt == 2:
+        user.moneyDeposit()
+        
+    elif opt == 3:
+        user.moneyWhidhraw()
+        
+    elif opt == 4:
+        user.showDetails()
+        
+    elif opt == 5:
+        user.userUpdate()
+        
+    elif opt == 6:
+        user.closeAccount()
+        
+    elif opt == 0:
+        break
     
-elif opt == 2:
-    user.moneyDeposit()
-    
-elif opt == 3:
-    user.moneyWhidhraw()
-    
-elif opt == 4:
-    user.showDetails()
-    
-elif opt == 5:
-    user.userUpdate()
-    
-elif opt == 6:
-    user.userUpdate()
+    else:
+        print(("Invalid Input").upper())
