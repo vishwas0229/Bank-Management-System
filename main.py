@@ -3,6 +3,7 @@ import json
 import random
 import string
 import datetime
+import bcrypt
 
 
 # New User Data
@@ -38,8 +39,14 @@ class userInfo:
     
     def Pin(self):
         pin = input("Create 4-degit pin: ")
+        if not (pin.isdigit() and len(pin) == 4):
+            print("PIN must be exactly 4 digits")
+            return self.Pin()
+        
         print("-------------------------------------------------")
-        return pin
+        
+        hPin = bcrypt.hashpw(pin.encode('utf-8'), bcrypt.gensalt()) # Hash PIN
+        return hPin.decode('utf-8')
       
     
 
@@ -97,10 +104,10 @@ class Bank:
             'Balance': 0
         }
         
-        info["PIN"] = int(info["PIN"])
+        # info["PIN"] = int(info["PIN"])
         
         #Check age > = 18 and pin has 4 degits
-        if info['Age'] < 18 or len(str(info['PIN'])) != 4:
+        if info['Age'] < 18:
             print("You can't open account")
             print("-------------------------------------------------")
             
@@ -121,9 +128,9 @@ class Bank:
     def moneyDeposit(self):
         try:
             accNum = input("Enter Account Number: ")
-            pin = int(input("Enter PIN: "))
+            pin = input("Enter PIN: ")
             
-            userData = [i for i in Bank.data if i['Account No.'] == accNum and i['PIN'] == pin]
+            userData = [i for i in Bank.data if i['Account No.'] == accNum and bcrypt.checkpw(pin.encode('utf-8'), i['PIN'].encode('utf8'))]
             if userData == False:
                 print("User data not found")
                 print("-------------------------------------------------")
@@ -146,9 +153,9 @@ class Bank:
     def moneyWhidhraw(self):
         try:
             accNum = input("Enter Account Number: ")
-            pin = int(input("Enter PIN: "))
+            pin = input("Enter PIN: ")
             
-            userData = [i for i in Bank.data if i['Account No.'] == accNum and i['PIN'] == pin]
+            userData = [i for i in Bank.data if i['Account No.'] == accNum and bcrypt.checkpw(pin.encode('utf-8'), i['PIN'].encode('utf8'))]
             if userData == False:
                 print("User data not found")
                 print("-------------------------------------------------")
@@ -175,10 +182,10 @@ class Bank:
     # Show user Details
     def showDetails(self):
         accNum = input("Enter Account Number: ")
-        pin = int(input("Enter PIN: "))
+        pin = input("Enter PIN: ")
         print("-------------------------------------------------")
         
-        userData = [i for i in Bank.data if i['Account No.'] == accNum and i['PIN'] == pin]
+        userData = [i for i in Bank.data if i['Account No.'] == accNum and bcrypt.checkpw(pin.encode('utf-8'), i['PIN'].encode('utf8'))]
         
         if userData == False:
             print("Account Dosen't Exist")
@@ -195,9 +202,9 @@ class Bank:
     # Update User Update
     def userUpdate(self):
         accNum = input("Enter Account Number: ")
-        pin = int(input("Enter PIN: "))
+        pin = input("Enter PIN: ")
                 
-        userData = [i for i in Bank.data if i['Account No.'] == accNum and i['PIN'] == pin]
+        userData = [i for i in Bank.data if i['Account No.'] == accNum and bcrypt.checkpw(pin.encode('utf-8'), i['PIN'].encode('utf8'))]
         
         if userData == False:
             print("Account Dosen't Exist")
@@ -227,8 +234,8 @@ class Bank:
             updateInfo["Account No."] = userData[0]["Account No."]
             updateInfo["Balance"] = userData[0]["Balance"]
             
-            if type(updateInfo["PIN"]) == str:
-                updateInfo["PIN"] = int(updateInfo["PIN"])
+            # if type(updateInfo["PIN"]) == str:
+            #     updateInfo["PIN"] = int(updateInfo["PIN"])
             
             for i in updateInfo:
                 if updateInfo[i] == userData[0][i]:
@@ -249,9 +256,9 @@ class Bank:
     # Close user Account
     def closeAccount(self):
         accNum = input("Enter Account Number: ")
-        pin = int(input("Enter PIN: "))
+        pin = input("Enter PIN: ")
                         
-        userData = [i for i in Bank.data if i['Account No.'] == accNum and i['PIN'] == pin]
+        userData = [i for i in Bank.data if i['Account No.'] == accNum and bcrypt.checkpw(pin.encode('utf-8'), i['PIN'].encode('utf8'))]
         
         if userData == False:
             print("Account Dosen't Exist")
