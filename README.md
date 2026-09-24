@@ -37,8 +37,9 @@ The current implementation checks:
 
 - Customer age must be **18 or above**
 - PIN must contain **exactly 4 digits**
+- PIN is hashed with **bcrypt** before storage
 
-When the checks pass, the account is added to `data.json`.
+When the checks pass, the account is added to `data.json` with the hashed PIN.
 
 ### 2. Deposit Money
 
@@ -127,7 +128,7 @@ Bank-Management-System/
 | `string` | Numeric character generation |
 | OOP / Classes | Organizing user and banking operations |
 
-No external Python packages are required by the current implementation; it uses modules from the Python standard library.
+The current implementation also requires the external Python package **bcrypt** for PIN hashing and verification.
 
 ---
 
@@ -212,7 +213,7 @@ data.json
 
 ### Prerequisites
 
-Install **Python 3** on your system.
+Install **Python 3** and the **bcrypt** package.
 
 Check your Python installation:
 
@@ -231,6 +232,18 @@ python3 --version
 ```bash
 git clone https://github.com/vishwas0229/Bank-Management-System.git
 cd Bank-Management-System
+```
+
+### Install the Dependency
+
+```bash
+pip install bcrypt
+```
+
+If your system uses `pip3`:
+
+```bash
+pip3 install bcrypt
 ```
 
 ### Run the Application
@@ -253,15 +266,11 @@ The program will display the banking menu and wait for the user's selection.
 
 ## 🔐 Authentication
 
-For account-level actions, the current implementation uses a combination of:
+For account-level actions, the current implementation uses the account number together with the entered PIN and verifies the PIN using bcrypt.
 
-```text
-Account Number + PIN
-```
+PINs are not stored as plain text. New PINs are validated as exactly four digits and hashed with a generated bcrypt salt. Authentication uses bcrypt verification against the stored hash.
 
-The program searches the loaded account list for a record where both values match.
-
-This provides a basic authentication mechanism for the learning project, but it is **not suitable for production banking software**.
+This is still a learning-project authentication mechanism and is **not suitable for production banking software**.
 
 ---
 
@@ -345,23 +354,20 @@ Save data.json
 
 GitHub Issues are being used to track planned improvements and currently identified issues without modifying the existing application source.
 
-### 🐛 Current Issue
+### 📊 Issue Status
 
-| Issue | Description | Status |
+| Issue | Feature / Bug | Status |
 |---|---|---|
-| [#8 — Close Account Menu Mapping](https://github.com/vishwas0229/Bank-Management-System/issues/8) | Menu option 6 currently calls the update-details method instead of the existing close-account method. | Open |
+| [#1](https://github.com/vishwas0229/Bank-Management-System/issues/1) | Continuous Main Menu | ✅ Closed — implemented |
+| [#2](https://github.com/vishwas0229/Bank-Management-System/issues/2) | Transaction History | 🔴 Open — not implemented |
+| [#3](https://github.com/vishwas0229/Bank-Management-System/issues/3) | Fund Transfer | 🔴 Open — not implemented |
+| [#4](https://github.com/vishwas0229/Bank-Management-System/issues/4) | Strong Input Validation | 🔴 Open — partially implemented |
+| [#5](https://github.com/vishwas0229/Bank-Management-System/issues/5) | Secure PIN Storage | ✅ Closed — bcrypt hashing and verification implemented |
+| [#6](https://github.com/vishwas0229/Bank-Management-System/issues/6) | Database Backend | 🔴 Open — JSON storage remains |
+| [#7](https://github.com/vishwas0229/Bank-Management-System/issues/7) | Account Number Uniqueness | 🔴 Open — uniqueness check not implemented |
+| [#8](https://github.com/vishwas0229/Bank-Management-System/issues/8) | Close Account Menu Mapping | ✅ Closed — option 6 calls closeAccount() |
 
-### 🚀 Planned Features
-
-| Issue | Feature | Description |
-|---|---|---|
-| [#1](https://github.com/vishwas0229/Bank-Management-System/issues/1) | Continuous Main Menu | Keep the application running and return to the menu after each operation. |
-| [#2](https://github.com/vishwas0229/Bank-Management-System/issues/2) | Transaction History | Store and display deposit, withdrawal, and transfer records. |
-| [#3](https://github.com/vishwas0229/Bank-Management-System/issues/3) | Fund Transfer | Transfer money securely between existing accounts. |
-| [#4](https://github.com/vishwas0229/Bank-Management-System/issues/4) | Strong Input Validation | Add centralized validation for account, customer, PIN, and transaction inputs. |
-| [#5](https://github.com/vishwas0229/Bank-Management-System/issues/5) | Secure PIN Storage | Replace plain-text PIN storage with secure credential handling. |
-| [#6](https://github.com/vishwas0229/Bank-Management-System/issues/6) | Database Backend | Move from JSON persistence toward SQLite/MySQL-based storage. |
-| [#7](https://github.com/vishwas0229/Bank-Management-System/issues/7) | Account Number Uniqueness | Verify generated account numbers are unique before saving them. |
+**Progress: 3 / 8 issues completed; 5 remain open.**
 
 ### 📌 Project Tracking
 
@@ -384,13 +390,13 @@ For repository maintenance updates that are limited to documentation and project
 
 ## ⚠️ Current Implementation Notes
 
-This README documents the repository as it currently exists. Some behaviors should be considered when using or extending the project:
+This README documents the repository as it currently exists after the latest implementation scan. Some behaviors should be considered when using or extending the project:
 
 1. **Local JSON storage**  
    `data.json` is a plain local file rather than a secure banking database.
 
 2. **PIN storage**  
-   PIN values are stored directly in the JSON data, so the current implementation does not hash or encrypt credentials.
+   PINs are stored as bcrypt hashes, and authentication uses bcrypt verification. The original PIN is not stored in `data.json`.
 
 3. **Account number generation**  
    Account numbers are generated randomly from digits. The current code does not perform a database-level uniqueness check before storing a newly generated number.
@@ -402,15 +408,18 @@ This README documents the repository as it currently exists. Some behaviors shou
    The code checks for insufficient balance, but the current withdrawal flow does not explicitly reject every possible invalid amount case such as a negative value.
 
 6. **Menu flow**  
-   The program processes a single selected menu operation each time `main.py` is executed; it does not currently contain a continuous loop that returns to the main menu.
+   The application now uses a continuous `while` loop and includes an explicit `0. Exit` option, so issue #1 is complete.
 
 7. **Source-level typo**  
    The withdrawal method and menu label contain the existing spelling `Whidhraw`. This README keeps that spelling when referring to the actual implementation.
 
 8. **Close-account menu behavior**  
-   The menu labels option 6 as **Close Account**, while the current bottom-level dispatch in `main.py` calls `user.userUpdate()` for option 6. Therefore, the `closeAccount()` method exists, but option 6 does not currently invoke it from the main menu.
+   Option 6 now correctly calls `user.closeAccount()`, so issue #8 is complete.
 
-9. **Sample data**  
+9. **External dependency**  
+   The current implementation imports `bcrypt`, so the package must be installed before running the application.
+
+10. **Sample data**  
    The repository's `data.json` contains sample account records. Because these records include example PINs and balances, they should be treated as demo data only and replaced before any real-world use.
 
 ---
